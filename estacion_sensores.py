@@ -30,7 +30,7 @@ def recibir_datos_sensores():
     cursor = conn.cursor()
     
     cursor.execute(
-        "INSERT INTO Sensores1(fecha,Temperatura,Gas,Luz,Humedad,Agua,Polvo) VALUES (%s,%s,%s,%s,%s,%s)", (fecha,temp,gas,luz,humedad,agua,polvo))
+        "INSERT INTO Sensores1(fecha,Temperatura,Gas,Luz,Humedad,Agua,Polvo) VALUES (%s,%s,%s,%s,%s,%s,%s)", (fecha,temp,gas,luz,humedad,agua,polvo))
     conn.commit()
     cursor.close()
     conn.close()
@@ -38,3 +38,4 @@ def recibir_datos_sensores():
 
 if __name__=="__main__":
     app.run()
+
