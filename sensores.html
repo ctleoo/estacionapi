@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <title>DAM METRICS</title>
+        <link rel="stylesheet" href="sensores.css">
+        <link rel="icon" href="img/logo.jpeg">
+        <script src="https://kit.fontawesome.com/9af43d6f96.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fa-solid fa-bars"></i>
+            </label>
+            <a href="#" class="enlace">
+                <img src="img/logo.jpeg" alt="" class="logo">
+            </a>
+            <ul>
+                <li><a href="" class="active">Inicio</a></li>
+                <li><a href="">Nosotros</a></li>
+                <li><a href="">Servicios</a></li>
+                <li><a href="">Portafolio</a></li>
+                <li><a href="">Contacto</a></li>
+                
+            </ul>
+        </nav>
+
+        <section>
+            <h1 class="introduccion">Estacion Meteorologica de Sensores</h1>
+            <table border="1" id="tabla" class="tabla-estilo">
+                <tr>
+                    <th>ID</th><th>Fecha</th><th>Temperatura1</th>
+                    <th>Humedad1</th><th>Temperatura2</th><th>Humedad2</th><th>Distancia</th>
+        
+                </tr>
+            </table>
+            <h1 class="motor">Estado del Motor</h1>
+            <p class="motorc">Motor1: <span id="estadoMotor">Cargando...</span></p>
+            <div style="text-align: center;"><button onclick="moverMotor()" class="btn-verde">🌿Cambiar Estado</button></div>
+            <p id="respuestaMotor" style="color: green;" class="respuestaMotor"></p>
+
+            <script>
+                fetch('https://apiprueba2025.onrender.com/verDatos')
+                    .then(res => res.json())
+                    .then(data => {
+                        const tabla = document.getElementById("tabla");
+                        data.forEach(p => {
+                            const fila = tabla.insertRow();
+                            fila.innerHTML = `
+                                <td>${p.Id}</td>
+                                <td>${p.Fecha}</td>
+                                <td>${p.Temperatura1}</td>
+                                <td>${p.Humedad1}</td>
+                                <td>${p.Temperatura2}</td>
+                                <td>${p.Humedad2}</td>
+                                <td>${p.Distancia}</td>
+                            `;
+                        });
+                    });
+            </script>
+            <script>
+                function actualizarEstado() {
+                    fetch('https://apiprueba2025.onrender.com/estadoMotor')
+                        .then(res => res.json())
+                        .then(data => {
+                            document.getElementById("estadoMotor").textContent = data.Motor1 ? "Encendido (1)" : "Apagado (0)";
+                        });
+                }
+
+                function moverMotor() {
+                    fetch('https://apiprueba2025.onrender.com/moverMotor', {
+                        method: 'POST'
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById("respuestaMotor").textContent = data.mensaje;
+                        actualizarEstado();
+                    })
+                    .catch(err => {
+                        document.getElementById("respuestaMotor").textContent = "Error al cambiar el estado del motor.";
+                    });
+                }
+                actualizarEstado();
+            </script>
+  
+        </section>
+    </body>
+    <footer></footer>
+</html>

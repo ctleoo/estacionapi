@@ -36,6 +36,42 @@ def recibir_datos_sensores():
     conn.close()
     return "Dato Recibido"
 
+
+
+@app.route("/verDatos")
+def ver_datos():
+    conn = psycopg2.connect(URL)
+    cursor= conn.cursor()
+    cursor.execute("SELECT * FROM Sensores1")
+    datos = cursor.fetchall()
+    conn.close()
+    return jsonify([{"Id": x[0], "Fecha": x[1], "Temperatura1": x[2],
+                     "Humedad1": x[3], "Temperatura2": x[4], "Humedad2": x[5],
+                     "Distancia": x[6]} for x in datos])
+
+
+
+@app.route("/estadoMotor")
+def estado_motor():
+    conn = psycopg2.connect(URL)
+    cursor = conn.cursor()
+    cursor.execute("SELECT Motor1 FROM Actuadores WHERE id = 1")
+    estado = cursor.fetchone()
+    conn.close()
+    return jsonify({"Motor1": estado[0]})
+
+@app.route("/moverMotor", methods=["POST"])
+def mover_motor():
+    conn = psycopg2.connect(URL)
+    cursor = conn.cursor()
+    cursor.execute("SELECT Motor1 FROM Actuadores WHERE id = 1")
+    estado_actual = cursor.fetchone()[0]
+    nuevo_estado = not estado_actual
+    cursor.execute("UPDATE Actuadores SET Motor1 = %s WHERE id = 1", (nuevo_estado,))
+    conn.commit()
+    conn.close()
+    return jsonify({"mensaje": f"Motor cambiado a {int(nuevo_estado)}", "Motor1": nuevo_estado})
+
 if __name__=="__main__":
     app.run()
 
