@@ -1,10 +1,13 @@
 from flask import Flask, jsonify, request
 import psycopg2
 from datetime import datetime
+from flask_cors import CORS
 
 URL="postgresql://leo:wz0DVDsXFwFjwlH0FS6lg2KMFtzhWcAJ@dpg-d0d4vr95pdvs73f7o8a0-a.oregon-postgres.render.com/pokemones_8bvs"
 
 app= Flask(__name__)
+CORS(app)
+
 
 @app.route("/")
 def introduccion():

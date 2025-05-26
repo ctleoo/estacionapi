@@ -39,7 +39,7 @@
             <p id="respuestaMotor" style="color: green;" class="respuestaMotor"></p>
 
             <script>
-                fetch('https://apiprueba2025.onrender.com/verDatos')
+                fetch('https://pokedex-26xy.onrender.com/verDatos')
                     .then(res => res.json())
                     .then(data => {
                         const tabla = document.getElementById("tabla");
@@ -60,7 +60,7 @@
             </script>
             <script>
                 function actualizarEstado() {
-                    fetch('https://apiprueba2025.onrender.com/estadoMotor')
+                    fetch('https://pokedex-26xy.onrender.com/estadoMotor')
                         .then(res => res.json())
                         .then(data => {
                             document.getElementById("estadoMotor").textContent = data.Motor1 ? "Encendido (1)" : "Apagado (0)";
@@ -68,7 +68,7 @@
                 }
 
                 function moverMotor() {
-                    fetch('https://apiprueba2025.onrender.com/moverMotor', {
+                    fetch('https://pokedex-26xy.onrender.com/moverMotor', {
                         method: 'POST'
                     })
                     .then(res => res.json())
