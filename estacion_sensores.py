@@ -45,9 +45,9 @@ def ver_datos():
     cursor.execute("SELECT * FROM Sensores1")
     datos = cursor.fetchall()
     conn.close()
-    return jsonify([{"Id": x[0], "Fecha": x[1], "Temperatura1": x[2],
-                     "Humedad1": x[3], "Temperatura2": x[4], "Humedad2": x[5],
-                     "Distancia": x[6]} for x in datos])
+    return jsonify([{"Id": x[0], "Fecha": x[1], "Temperatura": x[2],
+                     "Gas": x[3], "Luz": x[4], "Humedad": x[5],
+                     "Agua": x[6], "Polvo": x[7]} for x in datos])
 
 
 

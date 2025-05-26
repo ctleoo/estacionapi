@@ -1,0 +1,65 @@
+<html>
+<head>
+    <title>Mi Pagina</title>
+</head>
+<body>
+    <h1>Sensores</h1>
+    <table border="1" id="tabla">
+        <tr>
+            <th>ID</th><th>Fecha</th><th>Temperatura1</th>
+            <th>Humedad1</th><th>Temperatura2</th><th>Humedad2</th><th>Distancia</th>
+        
+        </tr>
+    </table>
+
+    <h1>Estado del Motor</h1>
+
+    <p>Motor1: <span id="estadoMotor">Cargando...</span></p>
+    <button onclick="moverMotor()">Cambiar Estado</button>
+    <p id="respuestaMotor" style="color: green;"></p>
+
+    <script>
+        fetch('https://apiprueba2025.onrender.com/verDatos')
+            .then(res => res.json())
+            .then(data => {
+                const tabla = document.getElementById("tabla");
+                data.forEach(p => {
+                    const fila = tabla.insertRow();
+                    fila.innerHTML = `
+                        <td>${p.Id}</td>
+                        <td>${p.Fecha}</td>
+                        <td>${p.Temperatura1}</td>
+                        <td>${p.Humedad1}</td>
+                        <td>${p.Temperatura2}</td>
+                        <td>${p.Humedad2}</td>
+                        <td>${p.Distancia}</td>
+                    `;
+                });
+            });
+    </script>
+    <script>
+        function actualizarEstado() {
+            fetch('https://apiprueba2025.onrender.com/estadoMotor')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("estadoMotor").textContent = data.Motor1 ? "Encendido (1)" : "Apagado (0)";
+                });
+        }
+
+        function moverMotor() {
+            fetch('https://apiprueba2025.onrender.com/moverMotor', {
+                method: 'POST'
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("respuestaMotor").textContent = data.mensaje;
+                actualizarEstado();
+            })
+            .catch(err => {
+                document.getElementById("respuestaMotor").textContent = "Error al cambiar el estado del motor.";
+            });
+        }
+        actualizarEstado();
+    </script>
+</body>
+</html>

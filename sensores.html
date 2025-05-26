@@ -28,8 +28,8 @@
             <h1 class="introduccion">Estacion Meteorologica de Sensores</h1>
             <table border="1" id="tabla" class="tabla-estilo">
                 <tr>
-                    <th>ID</th><th>Fecha</th><th>Temperatura1</th>
-                    <th>Humedad1</th><th>Temperatura2</th><th>Humedad2</th><th>Distancia</th>
+                    <th>ID</th><th>Fecha</th><th>Temperatura</th>
+                    <th>Gas</th><th>Luz</th><th>Humedad</th><th>Nivel de agua</th><th>Polvo</th>
         
                 </tr>
             </table>
@@ -48,11 +48,12 @@
                             fila.innerHTML = `
                                 <td>${p.Id}</td>
                                 <td>${p.Fecha}</td>
-                                <td>${p.Temperatura1}</td>
-                                <td>${p.Humedad1}</td>
-                                <td>${p.Temperatura2}</td>
-                                <td>${p.Humedad2}</td>
-                                <td>${p.Distancia}</td>
+                                <td>${p.Temperatura}</td>
+                                <td>${p.Gas}</td>
+                                <td>${p.Luz}</td>
+                                <td>${p.Humedad}</td>
+                                <td>${p.Agua}</td>
+                                <td>${p.Polvo}</td>
                             `;
                         });
                     });
